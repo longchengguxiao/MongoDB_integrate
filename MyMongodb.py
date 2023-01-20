@@ -4,8 +4,8 @@
 # @Author  : longchengguxiao
 # @File    : MyMongodb.py
 # @Version : 3.8.9 Python
-# @Description : This class integrates the basic usage of MongoDB, including adding, checking, deleting and
-# modifying, and outputting logs in the form of log. Please pay attention to the comments before use. Initialization
+# @Description : This class integrates the basic usage of MongoDB, including inserting, finding, deleting and
+# updating, and outputting logs in the form of log. Please pay attention to the comments before use. Initialization
 # needs to fill in host, port and other information
 
 import logging
