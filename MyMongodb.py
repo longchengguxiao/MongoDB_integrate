@@ -34,18 +34,23 @@ class MyMongodb():
         :param collection:
         """
         self.client = pymongo.MongoClient(host=host, port=port)
-        logging.info("Successfully connected the client on %s:%d", self.client.HOST, self.client.PORT)
+        logging.info(
+            "Successfully connected the client on %s:%d",
+            self.client.HOST,
+            self.client.PORT)
         if not database or not collection:
             logging.error("Not find dataset name or collection name inputted")
             raise KeyError
         if database not in self.client.list_database_names():
-            logging.warning("Database %s not exists in the client. \nBefore filled with data, it will not be saved in "
-                            "the client.", database)
+            logging.warning(
+                "Database %s not exists in the client. \nBefore filled with data, it will not be saved in "
+                "the client.", database)
         self.db = self.client.get_database(database)
         logging.info("Successfully connected to dataset %s", database)
         if collection in self.db.list_collection_names():
-            logging.warning("Collection %s not exists in the database. \nBefore filled with data, it will not be "
-                            "saved in the database.", collection)
+            logging.warning(
+                "Collection %s not exists in the database. \nBefore filled with data, it will not be "
+                "saved in the database.", collection)
         self.collection: Collection = self.db.get_collection(collection)
         logging.info("Successfully connected to collection %s", collection)
 
@@ -79,7 +84,7 @@ class MyMongodb():
                   optional: str = None,
                   limit_num: int = 99999,
                   skip_num: int = 0) -> (Cursor,
-                                               int):
+                                         int):
         """
         查找以键值对或条件选择的所有值\n
         只查个数不返回结果可以用collection.estimated_document_count()\n
@@ -102,7 +107,8 @@ class MyMongodb():
         :return: 符合条件的所有数据并返回个数，是一个迭代器，可以用循环遍历
         """
         if not optional:
-            results = self.collection.find({key: value}).limit(limit_num).skip(skip_num)
+            results = self.collection.find(
+                {key: value}).limit(limit_num).skip(skip_num)
         else:
             results = self.collection.find(
                 {key: {optional: value}}).limit(limit_num).skip(skip_num)
@@ -143,9 +149,12 @@ class MyMongodb():
         elif impact_data == 'single':
             results = self.collection.delete_one(filter=filter)
         else:
-            logging.error("The field parameter 'impact_data' is incorrect, please reselect. Failed to delete")
+            logging.error(
+                "The field parameter 'impact_data' is incorrect, please reselect. Failed to delete")
         if results:
-            logging.info("Successfully matched and deleted %d data.", results.deleted_count)
+            logging.info(
+                "Successfully matched and deleted %d data.",
+                results.deleted_count)
 
     def update(self, filter: Dict, update: Dict, impact_data: str = 'all'):
         """
@@ -160,11 +169,12 @@ class MyMongodb():
         elif impact_data == 'single':
             results = self.collection.update_one(filter=filter, update=update)
         else:
-            logging.error("The field parameter 'impact_data' is incorrect, please reselect. Failed to update")
+            logging.error(
+                "The field parameter 'impact_data' is incorrect, please reselect. Failed to update")
         if results:
-            logging.info("Successfully matched %d data and updated %d data.", results.matched_count)
-
-
+            logging.info(
+                "Successfully matched %d data and updated %d data.",
+                results.matched_count)
 
 
 student1 = {
